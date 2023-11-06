@@ -1,0 +1,40 @@
+*{
+    user-select: none;
+    -ms-user-select: none;
+    outline: 0;
+	margin: 0;
+	padding: 0;
+    -webkit-tap-highliht-color: rgba(0,0,0,0);
+}
+html{
+	width:100%;
+	height: 100%;
+}
+
+body{
+	width:100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: #ffffff;
+}
+
+canvas{
+	width: 100%;
+	height: 100%;
+}
+
+#c1 {
+	display: none;
+}
+#c2 {
+	background-image: url(Transparent.png);
+	background-repeat: no-repeat;
+}
+
+/* div {
+float: left;
+border :1px solid #444444;
+padding:10px;
+margin: 10px;
+background:#3B3B3B;
+} */
