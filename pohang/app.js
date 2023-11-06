@@ -44,12 +44,9 @@ class App {
         this.video = document.getElementById("video");
         this.c1 = document.getElementById("c1");
         this.c2 = document.getElementById("c2");
+        this.ctx1 = c1.getContext("2d", {willReadFrequently: true});
+        this.ctx2 = c2.getContext("2d");
 
-        this.ctx1 = c1.getContext("2d");
-
-        var mainCanvas = document.getElementById("mainCanvas");
-        this.waveTransition.processor.doLoad(this.video, this.c1, mainCanvas);
-        
         // this.resize를 인스턴스에 바인딩하고, 이벤트 캡쳐링 차단.
         // false를 사용하면 이벤트 캡처링(capturing) 모드가 아닌 버블링 모드로 이벤트가 처리됩니다.
         window.addEventListener('resize', this.resize.bind(this), false);
@@ -77,7 +74,9 @@ class App {
     }
 
     animate(t){
-        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeigth);    //canvas를 clear하는 함수 추가
+        this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeigth);
+        this.ctx1.clearRect(0, 0, this.stageWidth, this.stageHeigth);    //canvas를 clear하는 함수 추가
+
         requestAnimationFrame(this.animate.bind(this));
 
 
@@ -98,8 +97,8 @@ class App {
         // this.seagullController.draw(this.ctx, t, dots2);   // 언덕의 dots을 받아서 양을 그려줌
         // console.log('seagull: ', this.seagullController.items.length)
 
-        // this.waveTransition.processor.timerCallback()
-this.waveTransition.processor.computeFrame(this.video, this.ctx1, this.ctx)
+        // 파도 트랜지션
+        this.computeFrame(this.ctx)
     }
 
     randomSpeed(where){
@@ -112,6 +111,30 @@ this.waveTransition.processor.computeFrame(this.video, this.ctx1, this.ctx)
         where.points[ranP].speed = random;
         // console.log("S",ranP)
     }
+
+    computeFrame(ctx) {
+        if (this.video.paused || this.video.ended) {
+          return;
+        }
+
+        this.ctx1.drawImage(this.video, 0, 0);
+        let frame = this.ctx1.getImageData(0, 0, 1920, 1080);
+            let l = frame.data.length / 4;
+    
+        for (let i = 0; i < l; i++) {
+          let r = frame.data[i * 4 + 0];
+          let g = frame.data[i * 4 + 1];
+          let b = frame.data[i * 4 + 2];
+          if (r < 100 && g > 100 && b < 100
+            || 200<r && 210<b && r<220 && g<200 && b<250)
+                frame.data[i * 4 + 3] = 0;
+        }
+
+        this.ctx2.putImageData(frame, 0, 0);
+        return;
+    }
+
+    
 }
 
 // window가 로드되면 App2를 생성
