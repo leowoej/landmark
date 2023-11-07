@@ -134,8 +134,15 @@ class App {
         return;
     }
 
-    
 }
+document.addEventListener("keyup", function(event) {
+    if (event.key === 'Enter') {
+        document.getElementById("video").play();
+        setTimeout(() => console.log("1초 후에 실행됨"), 1000);
+
+    }
+});
+
 
 // window가 로드되면 App2를 생성
 window.onload = () => {
