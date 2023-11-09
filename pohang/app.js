@@ -133,17 +133,108 @@ class App {
         this.ctx2.putImageData(frame, 0, 0);
         return;
     }
-
 }
+
+var rtn = {
+    "background" : new Array(), "width" : new Array(), "height" : new Array()
+};
+
+// background
+rtn.background.push("url('handsE.png') no-repeat -50px -31px;");
+rtn.background.push("url('handsE.png') no-repeat -242px -30px;");
+rtn.background.push("url('handsE.png') no-repeat -360px -34px;");
+rtn.background.push("url('handsE.png') no-repeat -492px -56px;");
+rtn.background.push("url('handsE.png') no-repeat -637px -30px;");
+rtn.background.push("url('handsE.png') no-repeat -774px -95px;");
+rtn.background.push("url('handsE.png') no-repeat -1040px -32px;");
+rtn.background.push("url('handsE.png') no-repeat -1214px -28px;");
+rtn.background.push("url('handsE.png') no-repeat -44px -275px;");
+rtn.background.push("url('handsE.png') no-repeat -216px -317px;");
+
+rtn.background.push("url('handsE.png') no-repeat -485px -256px;");
+rtn.background.push("url('handsE.png') no-repeat -637px -262px;");
+rtn.background.push("url('handsE.png') no-repeat -773px -278px;");
+rtn.background.push("url('handsE.png') no-repeat -1011px -260px;");
+rtn.background.push("url('handsE.png') no-repeat -1190px -261px;");
+rtn.background.push("url('handsE.png') no-repeat -60px -491px;");
+rtn.background.push("url('handsE.png') no-repeat -245px -489px;");
+rtn.background.push("url('handsE.png') no-repeat -422px -490px;");
+rtn.background.push("url('handsE.png') no-repeat -551px -555px;");
+rtn.background.push("url('handsE.png') no-repeat -814px -490px;");
+rtn.background.push("url('handsE.png') no-repeat -1024px -486px;");
+rtn.background.push("url('handsE.png') no-repeat -1185px -504px;");
+
+// width
+rtn.width.push("160px");
+rtn.width.push("80px");
+rtn.width.push("88px");
+rtn.width.push("104px");
+rtn.width.push("93px");
+rtn.width.push("236px");
+rtn.width.push("123px");
+rtn.width.push("128px");
+rtn.width.push("133px");
+rtn.width.push("222px");
+
+rtn.width.push("92px");
+rtn.width.push("93px");
+rtn.width.push("189px");
+rtn.width.push("124px");
+rtn.width.push("124px");
+rtn.width.push("112px");
+rtn.width.push("132px");
+rtn.width.push("89px");
+rtn.width.push("222px");
+rtn.width.push("138px");
+rtn.width.push("96px");
+rtn.width.push("113px");
+
+// height
+rtn.height.push("210px");
+rtn.height.push("210px");
+rtn.height.push("207px");
+rtn.height.push("160px");
+rtn.height.push("212px");
+rtn.height.push("100px");
+rtn.height.push("210px");
+rtn.height.push("214px");
+rtn.height.push("179px");
+rtn.height.push("114px");
+rtn.height.push("215px");
+rtn.height.push("209px");
+rtn.height.push("158px");
+rtn.height.push("212px");
+rtn.height.push("220px");
+rtn.height.push("220px");
+rtn.height.push("213px");
+rtn.height.push("211px");
+rtn.height.push("97px");
+rtn.height.push("211px");
+rtn.height.push("213px");
+rtn.height.push("197px");
+
 document.addEventListener("keyup", function(event) {
     if (event.key === 'Enter') {
-        document.getElementById("video").play();
-        setTimeout(() => console.log("1초 후에 실행됨"), 1000);
-
-    }
+        var video = document.getElementById("video");
+        video.play();
+            video.addEventListener("play", function(){
+                setTimeout(() => handChange(), 2000);
+            })
+        }
 });
 
+function handChange(){
+    var randomNum = randomHand();
 
+    document.getElementById("hand").style.cssText  = 'background:' + rtn.background[randomNum] +'; width:' 
+                + rtn.width[randomNum] +'; height:' + rtn.height[randomNum] +'; z-index:-1; transform:scale(2); position:absolute; top:53%; left:10%';
+};
+
+function randomHand(){
+    var randomNum = Math.floor((Math.random() * (rtn.background.length - 0)) + 0)
+    return randomNum;
+}
+    
 // window가 로드되면 App2를 생성
 window.onload = () => {
     new App();
