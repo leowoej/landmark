@@ -51,6 +51,7 @@ class App {
         // false를 사용하면 이벤트 캡처링(capturing) 모드가 아닌 버블링 모드로 이벤트가 처리됩니다.
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize();
+        handChange(6);
         requestAnimationFrame(this.animate.bind(this)); //애니메이션을 지정해줌
     }
 
@@ -223,11 +224,13 @@ document.addEventListener("keyup", function(event) {
         }
 });
 
-function handChange(){
+function handChange(handNum){
     var randomNum = randomHand();
-
-    document.getElementById("hand").style.cssText  = 'background:' + rtn.background[randomNum] +'; width:' 
-                + rtn.width[randomNum] +'; height:' + rtn.height[randomNum] +'; z-index:-1; transform:scale(2); position:absolute; top:53%; left:10%';
+    if (handNum == null || handNum == undefined) {
+        handNum = randomNum;
+    }
+    document.getElementById("hand").style.cssText  = 'background:' + rtn.background[handNum] +'; width:' 
+                + rtn.width[handNum] +'; height:' + rtn.height[handNum] +'; z-index:-1; transform:scale(2); position:absolute; top:53%; left:10%';
 };
 
 function randomHand(){
